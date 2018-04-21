@@ -16,6 +16,6 @@ $stmt->execute([$_POST['name'], $_POST['message'], $_POST['tid']]);
 if (!isset($_POST['uid']) || empty($_POST['uid'])) {
 	header('Location:message.php?uid=' . $_GET['uid'] . '&gid=' . $_POST['gid'] . '', true, 303);
 } else {
-	header('Location:message.php?uid=' . $_GET['uid'] . '&gid=' . $_POST['gid'] . '&uid=' . $_POST['uid'] . '', true, 303);
+	header('Location:message.php?uid=' . $_GET['uid'] . '&gid=' . $_POST['gid'] . '&uid=' . $_POST['uid'] . '&tid=' . $_POST['tid'] . '', true, 303);
 }
 ?>
