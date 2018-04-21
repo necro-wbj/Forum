@@ -26,7 +26,7 @@ try {
 //echo "連線成功";
 $stmt = $db->prepare('insert into account(name,pw) values(?,?)');
 $stmt->execute([$_POST['name'], $_POST['password']]);
-header('Location:group_list.php', true, 303);
+header('Location:index.php', true, 303);
 ?>
 </body>
 </html>

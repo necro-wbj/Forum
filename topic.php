@@ -42,10 +42,10 @@ while ($row = $stmt->fetch()) {
 	echo '<br>';
 }
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-	echo '<a href="group_list.php">返回群組列表</a>';
+	echo '<a href="index.php">返回群組列表</a>';
 	echo "&nbsp&nbsp";
 } else {
-	echo '<a href="group_list.php?&uid=' . $_GET['uid'] . '">返回群組列表</a>';
+	echo '<a href="index.php?&uid=' . $_GET['uid'] . '">返回群組列表</a>';
 	$stmt = $db->prepare('select * from account where user_id=?');
 	$stmt->execute([$_GET['uid']]);
 	$row = $stmt->fetch();

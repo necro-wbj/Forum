@@ -22,5 +22,5 @@ $stmt->execute([$_POST['name']]);
 // echo '新增了';
 // echo $stmt->rowCount();
 // echo '筆資料';
-header('Location:group_list.php', true, 303);
+header('Location:index.php', true, 303);
 ?>

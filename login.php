@@ -34,7 +34,7 @@ if (!isset($row) || empty($row)) {
 	echo 'document.location.href="sign_in.html";';
 	echo '</script>';
 } else {
-	header('Location:group_list.php?uid=' . $row['user_id'] . '', true, 303);
+	header('Location:index.php?uid=' . $row['user_id'] . '', true, 303);
 }
 ?>
 </body>

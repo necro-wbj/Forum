@@ -26,5 +26,5 @@ while ($row = $stmt->fetch()) {
 	echo '<a href="delete_account.php?uid=' . $_GET['uid'] . '&pid=' . $row['user_id'] . '">刪除帳號</a>';
 	echo '<br>';
 }
-echo '<a href="group_list.php?uid=' . $_GET['uid'] . '"></a>'
+echo '<a href="index.php?uid=' . $_GET['uid'] . '"></a>'
 ?>
