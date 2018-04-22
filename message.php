@@ -3,7 +3,7 @@ if (!isset($_GET['tid']) || empty($_GET['tid']) ||
 	!isset($_GET['gid']) || empty($_GET['gid'])) {
 	echo '參數不正確';
 	// echo '<a href="add_form.html">重新輸入</a>';
-	exit;
+	exit();
 }
 //連接資料庫
 try {
@@ -31,15 +31,55 @@ while ($row = $stmt->fetch()) {
 	echo $row['name'];}
 ?>
 </title>
-<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<style type="text/css">
+	.transparent{
+    	background-color: transparent; border: 0;
+	}
+ </style>
+<script language="javascript">
+var emoji_array = new Array("&#x1F600;","&#x1F601;","&#x1F602;") ;
+function input_emoji(str){
+	var t=document.getElementById(messages).value;
+	document.getElementById(messages).value=t+str;
+}
+function display(str){
+	document.getElementById(str).innerHTML=str;
+}
+function add_emoji() {
+	var i=0;
+	for(i=0;i<emoji_array.length;i++){
+				var I=document.createElement("button");
+				I.setAttribute("class","transparent");
+				I.setAttribute("value",emoji_array[i]);
+				I.setAttribute("onclick","input_emoji('"+emoji_array[i]+"')");
+				I.setAttribute("id",emoji_array[i]);
+                document.getElementById("emoji").appendChild(I);
+                display(emoji_array[i]);
+
+	}
+}
+function input_emoji(str) {
+	t=document.getElementById("message").value
+	document.getElementById("message").value=t+str;
+	remove_emoji()
+}
+function remove_emoji(){
+	var i;
+	for(i=0;i<emoji_array.length;i++){
+		document.getElementById("emoji").removeChild(document.getElementById(emoji_array[i]));
+	}
+}
+</script>
 </head>
 <body>
 <?php
 //查詢
 //等同 $stmt = $db->query('select name,cost from moneybook');
-$stmt = $db->prepare('select * from account where user_id=?');
-$stmt->execute([$_GET['uid']]);
-$row2 = $stmt->fetch();
+if (isset($_GET['uid']) || !empty($_GET['uid'])) {
+	$stmt = $db->prepare('select * from account where user_id=?');
+	$stmt->execute([$_GET['uid']]);
+	$row2 = $stmt->fetch();
+}
 $stmt = $db->prepare('select message_id,message.topic_id,message.name,message,group_id from message,topic where topic.topic_id=? AND topic.topic_id=message.topic_id;');
 $stmt->execute([$_GET['tid']]);
 while ($row = $stmt->fetch()) {
@@ -71,9 +111,11 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 	echo '<input type="hidden" name="name" value="' . $row2['name'] . '">';
 }
 ?>
-	請輸入留言:<input type="text" name="message">
-	<input type="submit">
+	請輸入留言:<input type="text" name="message" id="message">
+	<input type="button" value="&#x1F600;" onclick="add_emoji()" class="transparent"  >
+	<input type="submit" >
 	</form>
+
 <?php
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 	echo '<a href="topic.php?gid=' . $_GET['gid'] . '">返回主題列表</a>';
@@ -81,5 +123,5 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 	echo '<a href="topic.php?gid=' . $_GET['gid'] . '&uid=' . $_GET['uid'] . '">返回主題列表</a>';
 }
 ?>
-</body>
-</html>
+<div id="emoji"></div>
+</body></html>
